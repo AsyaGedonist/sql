@@ -43,7 +43,7 @@ public class VerifyTest {
 
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DBHelper.getVerificationCode(login);
-        var dashboardPage = verificationPage.validVerify(verificationCode);
+        verificationPage.validVerify(verificationCode);
     }
 
     @Test
@@ -55,7 +55,16 @@ public class VerifyTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DBHelper.getVerificationCode(login);
         var fakeVerificationCode = DBHelper.generateFakeVerificationCode(verificationCode);
-        var badVerificationPage = verificationPage.validVerify(fakeVerificationCode);
+        verificationPage.invalidVerify(fakeVerificationCode);
     }
+
+    @Test
+    void badPassword() {
+        var loginPage = new LoginPage();
+        var badAuthInfo = DataHelper.getBadAuthInfo();
+
+        loginPage.validLoginBadPass(badAuthInfo);
+    }
+
 
 }
