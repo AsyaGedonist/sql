@@ -22,25 +22,38 @@ public class VerifyTest {
         open("http://localhost:9999");
     }
 
-//    @AfterEach
-//    void cleanAuth(){
-//
-//    }
-//
-//    @AfterAll
-//    void cleanBase(){
-//
-//    }
+    @AfterEach
+    void cleanAuth(){
+    DBHelper.cleanAuth();
+    }
+
+    @AfterAll
+    static void cleanBase(){
+    DBHelper.cleanBase();
+    }
 
     @Test
     void shouldViewDashboard() {
         var loginPage = new LoginPage();
         var authInfo = DataHelper.getAuthInfo();
         var login = authInfo.getLogin();
-        var loginId = DBHelper.getUserId(login);
-        var verificationCode = DBHelper.getVerificationCode(loginId);
 
         var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DBHelper.getVerificationCode(login);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+
+        String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
+        assertEquals("http://localhost:9999/dashboard", currentUrl);
+    }
+
+    @Test
+    void badVerificationCode() {
+        var loginPage = new LoginPage();
+        var authInfo = DataHelper.getAuthInfo();
+        var login = authInfo.getLogin();
+
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DBHelper.getVerificationCode(login);
         var dashboardPage = verificationPage.validVerify(verificationCode);
 
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
