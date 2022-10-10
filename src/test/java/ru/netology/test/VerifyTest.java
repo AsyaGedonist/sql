@@ -11,6 +11,9 @@ import ru.netology.data.DBHelper;
 import ru.netology.data.DataHelper;
 import ru.netology.page.LoginPage;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,23 +44,18 @@ public class VerifyTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DBHelper.getVerificationCode(login);
         var dashboardPage = verificationPage.validVerify(verificationCode);
-
-        String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals("http://localhost:9999/dashboard", currentUrl);
     }
 
     @Test
-    void badVerificationCode() {
+    void fakeVerificationCode() {
         var loginPage = new LoginPage();
         var authInfo = DataHelper.getAuthInfo();
         var login = authInfo.getLogin();
 
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DBHelper.getVerificationCode(login);
-        var dashboardPage = verificationPage.validVerify(verificationCode);
-
-        String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals("http://localhost:9999/dashboard", currentUrl);
+        var fakeVerificationCode = DBHelper.generateFakeVerificationCode(verificationCode);
+        var badVerificationPage = verificationPage.validVerify(fakeVerificationCode);
     }
 
 }

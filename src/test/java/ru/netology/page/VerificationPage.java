@@ -20,4 +20,10 @@ public class VerificationPage {
         verifyButton.click();
         return new DashboardPage();
     }
+
+    public BadVerificationPage invalidVerify(String code) {
+        codeField.setValue(code);
+        verifyButton.click();
+        return new BadVerificationPage();
+    }
 }

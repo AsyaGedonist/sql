@@ -43,11 +43,11 @@ public class DBHelper {
         queryRunner.update(connection, "DELETE FROM users;");
     }
 
-//    public static String generateVerificationCode(String code) {
-//        String fakeCode = faker.number().digits(5);
-//        while (fakeCode != code) {
-//            fakeCode = faker.number().digits(5);
-//        }
-//        return fakeCode;
-//    }
+    public static String generateFakeVerificationCode(String code) {
+        String fakeCode = faker.number().digits(5);
+        while (fakeCode == code) {
+            fakeCode = faker.number().digits(5);
+        }
+        return fakeCode;
+    }
 }
