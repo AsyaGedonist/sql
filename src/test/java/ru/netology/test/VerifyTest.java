@@ -35,10 +35,10 @@ public class VerifyTest {
 
     }
 
-//    @AfterAll
-//    static void cleanBase(){
-//    DBHelper.cleanBase();
-//    }
+    @AfterAll
+    static void cleanBase(){
+    DBHelper.cleanBase();
+    }
 
     @Test
     void shouldViewDashboard() {
@@ -75,11 +75,15 @@ public class VerifyTest {
     void badPasswordTreeTimes() {
         var loginPage = new LoginPage();
         var badAuthInfo = DataHelper.getBadAuthInfo();
-        loginPage.validLoginBadPass(badAuthInfo);
-        loginPage.validLoginBadPass(badAuthInfo);
-        loginPage.validLoginBadPass(badAuthInfo);
-        var status = DBHelper.getStatus(badAuthInfo.getLogin());
+        var login = badAuthInfo.getLogin();
 
+        loginPage.validLoginBadPass(badAuthInfo);
+        loginPage.cleanLoginPage();
+        loginPage.validLoginBadPass(badAuthInfo);
+        loginPage.cleanLoginPage();
+        loginPage.validLoginBadPass(badAuthInfo);
+
+        var status = DBHelper.getStatus(badAuthInfo.getLogin());
         assertEquals("blocked", status);
     }
 
