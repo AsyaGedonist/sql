@@ -50,4 +50,17 @@ public class DBHelper {
         }
         return fakeCode;
     }
+
+    @SneakyThrows
+    public static String getStatus(String login){
+        setup();
+        String status = "SELECT status FROM users WHERE login = ?;";
+        return queryRunner.query(connection, status, new ScalarHandler<>(), login);
+    }
+
+    @SneakyThrows
+    public static void blockUser(String login){
+        setup();
+        queryRunner.update(connection, "UPDATE users SET status = blocked WHERE login = ?;");
+    }
 }
