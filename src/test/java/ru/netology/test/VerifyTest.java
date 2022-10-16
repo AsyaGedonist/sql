@@ -1,5 +1,6 @@
 package ru.netology.test;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
@@ -11,6 +12,8 @@ import ru.netology.data.DBHelper;
 import ru.netology.data.DataHelper;
 import ru.netology.page.LoginPage;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -21,7 +24,7 @@ public class VerifyTest {
 
     @BeforeEach
     void setup() {
-//        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
     }
 
@@ -35,10 +38,6 @@ public class VerifyTest {
 //    DBHelper.cleanBase();
 //    }
 
-//    @Test
-//    void cleanAuthManual(){
-//        DBHelper.cleanAuth();
-//    }
     @Test
     void shouldViewDashboard() {
         var loginPage = new LoginPage();
@@ -64,14 +63,15 @@ public class VerifyTest {
         assertEquals("Ошибка! Неверно указан код! Попробуйте ещё раз.", notification);
     }
 
-//    @Test
-//    void badPassword() {
-//        var loginPage = new LoginPage();
-//        var badAuthInfo = DataHelper.getBadAuthInfo();
-//
-//        loginPage.validLoginBadPass(badAuthInfo);
-//    }
-//
+    @Test
+    void badPassword() {
+        var loginPage = new LoginPage();
+        var badAuthInfo = DataHelper.getBadAuthInfo();
+        var notification = loginPage.validLoginBadPass(badAuthInfo);
+
+        assertEquals("Ошибка! Неверно указан логин или пароль", notification);
+    }
+
 //    @Test
 //    void badPasswordTreeTimes() {
 //        var loginPage = new LoginPage();

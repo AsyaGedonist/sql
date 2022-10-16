@@ -1,8 +1,11 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DBHelper;
 import ru.netology.data.DataHelper;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -16,15 +19,19 @@ public class VerificationPage {
         codeField.shouldBe(visible);
     }
 
-    public DashboardPage validVerify(String code) {
+    public void inputData(String code){
         codeField.setValue(code);
         verifyButton.click();
+    }
+
+    public DashboardPage validVerify(String code) {
+        inputData(code);
         return new DashboardPage();
     }
 
     public String inValidVerify(String code) {
-        codeField.setValue(code);
-        verifyButton.click();
+        inputData(code);
+        notification.shouldBe(Condition.visible, Duration.ofSeconds(15));
         return notification.text();
     }
 }
