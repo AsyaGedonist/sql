@@ -41,5 +41,6 @@ out/
 
 ### Exclusions ###
 !gradle/wrapper/gradle-wrapper.jar
+!artifacts/app-deadline.jar
 !**/src/main/**
 !**/src/test/**

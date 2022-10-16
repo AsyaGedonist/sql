@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class VerificationPage {
     private SelenideElement codeField = $("[data-test-id=code] input");
     private SelenideElement verifyButton = $("[data-test-id=action-verify]");
+    private SelenideElement notification = $("[data-test-id=error-notification] div.notification__content");
 
     public VerificationPage() {
         codeField.shouldBe(visible);
@@ -21,9 +22,9 @@ public class VerificationPage {
         return new DashboardPage();
     }
 
-    public BadVerificationPage invalidVerify(String code) {
+    public String inValidVerify(String code) {
         codeField.setValue(code);
         verifyButton.click();
-        return new BadVerificationPage();
+        return notification.text();
     }
 }

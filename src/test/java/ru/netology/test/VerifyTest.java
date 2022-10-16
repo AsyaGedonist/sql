@@ -21,7 +21,7 @@ public class VerifyTest {
 
     @BeforeEach
     void setup() {
-        Configuration.holdBrowserOpen = true;
+//        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
     }
 
@@ -30,16 +30,15 @@ public class VerifyTest {
     DBHelper.cleanAuth();
     }
 
-    @AfterEach
-    void resetStatus(){
+//    @AfterAll
+//    static void cleanBase(){
+//    DBHelper.cleanBase();
+//    }
 
-    }
-
-    @AfterAll
-    static void cleanBase(){
-    DBHelper.cleanBase();
-    }
-
+//    @Test
+//    void cleanAuthManual(){
+//        DBHelper.cleanAuth();
+//    }
     @Test
     void shouldViewDashboard() {
         var loginPage = new LoginPage();
@@ -60,31 +59,33 @@ public class VerifyTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DBHelper.getVerificationCode(login);
         var fakeVerificationCode = DBHelper.generateFakeVerificationCode(verificationCode);
-        verificationPage.invalidVerify(fakeVerificationCode);
+        var notification = verificationPage.inValidVerify(fakeVerificationCode);
+
+        assertEquals("Ошибка! Неверно указан код! Попробуйте ещё раз.", notification);
     }
 
-    @Test
-    void badPassword() {
-        var loginPage = new LoginPage();
-        var badAuthInfo = DataHelper.getBadAuthInfo();
-
-        loginPage.validLoginBadPass(badAuthInfo);
-    }
-
-    @Test
-    void badPasswordTreeTimes() {
-        var loginPage = new LoginPage();
-        var badAuthInfo = DataHelper.getBadAuthInfo();
-        var login = badAuthInfo.getLogin();
-
-        loginPage.validLoginBadPass(badAuthInfo);
-        loginPage.cleanLoginPage();
-        loginPage.validLoginBadPass(badAuthInfo);
-        loginPage.cleanLoginPage();
-        loginPage.validLoginBadPass(badAuthInfo);
-
-        var status = DBHelper.getStatus(badAuthInfo.getLogin());
-        assertEquals("blocked", status);
-    }
+//    @Test
+//    void badPassword() {
+//        var loginPage = new LoginPage();
+//        var badAuthInfo = DataHelper.getBadAuthInfo();
+//
+//        loginPage.validLoginBadPass(badAuthInfo);
+//    }
+//
+//    @Test
+//    void badPasswordTreeTimes() {
+//        var loginPage = new LoginPage();
+//        var badAuthInfo = DataHelper.getBadAuthInfo();
+//        var login = badAuthInfo.getLogin();
+//
+//        loginPage.validLoginBadPass(badAuthInfo);
+//        loginPage.cleanLoginPage();
+//        loginPage.validLoginBadPass(badAuthInfo);
+//        loginPage.cleanLoginPage();
+//        loginPage.validLoginBadPass(badAuthInfo);
+//
+//        var status = DBHelper.getStatus(badAuthInfo.getLogin());
+//        assertEquals("blocked", status);
+//    }
 
 }

@@ -14,12 +14,12 @@ public class LoginPage {
         return new VerificationPage();
     }
 
-    public BadLoginPage validLoginBadPass(DataHelper.AuthInfo info) {
-        $("[data-test-id=login] input").setValue(info.getLogin());
-        $("[data-test-id=password] input").setValue(info.getPassword());
-        $("[data-test-id=action-login]").click();
-        return new BadLoginPage();
-    }
+//VerificationPage    public BadLoginPage validLoginBadPass(DataHelper.AuthInfo info) {
+//        $("[data-test-id=login] input").setValue(info.getLogin());
+//        $("[data-test-id=password] input").setValue(info.getPassword());
+//        $("[data-test-id=action-login]").click();
+//        return new BadLoginPage();
+//    }
 
     public void cleanLoginPage () {
         $("[data-test-id=login] input").doubleClick().sendKeys(Keys.DELETE);
