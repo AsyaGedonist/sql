@@ -33,10 +33,10 @@ public class VerifyTest {
     DBHelper.cleanAuth();
     }
 
-    @AfterAll
-    static void cleanBase(){
-    DBHelper.cleanBase();
-    }
+//    @AfterAll
+//    static void cleanBase(){
+//    DBHelper.cleanBase();
+//    }
 
     @Test
     void shouldViewDashboard() {

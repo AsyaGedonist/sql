@@ -38,7 +38,6 @@ public class DBHelper {
     @SneakyThrows
     public static void cleanBase(){
         setup();
-        queryRunner.update(connection, "DELETE FROM auth_codes;");
         queryRunner.update(connection, "DELETE FROM cards;");
         queryRunner.update(connection, "DELETE FROM users;");
     }
