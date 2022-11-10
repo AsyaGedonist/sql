@@ -61,7 +61,7 @@ public class BackTest {
         RequestSpecification request = RestAssured.given();
         request.header("Content-type", "application/json")
                 .baseUri("http://localhost:9999/api")
-                .body(requestBody.toString());
+                .body(requestBody);
         Response response = request.post("/auth");
         int statusCode = response.getStatusCode();
         assertEquals(statusCode, 200);
